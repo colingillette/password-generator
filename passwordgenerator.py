@@ -4,35 +4,49 @@
 import string
 import random
 
+def rand_seed(items):
+    items -= 1
+    rand = random.randrange(0, items)
+    return rand
+
 def make_password():
     # Starting arrays for random indicies to choose from
     lower = string.ascii_lowercase
     upper = string.ascii_uppercase
     numbers = list(range(0, 10))
     specialchar = '!#$@?'
+    options = ''
 
     # Random seeds to choose from arrays
-    letterseed1 = random.randrange(0, 25)
-    letterseed2 = random.randrange(0, 25)
-    letterseed3 = random.randrange(0, 25)
-    letterseed4 = random.randrange(0, 25)
+    letterseed1 = rand_seed(len(lower))
+    letterseed2 = rand_seed(len(upper))
+    letterseed3 = rand_seed(len(lower))
+    letterseed4 = rand_seed(len(upper))
 
-    numseed1 = random.randrange(0, 9)
-    numseed2 = random.randrange(0, 9)
+    numseed1 = rand_seed(len(numbers))
+    numseed2 = rand_seed(len(numbers))
 
-    specseed1 = random.randrange(0, 4)
+    specseed1 = rand_seed(len(specialchar))
+    specseed2 = rand_seed(len(specialchar))
 
     # Assign random characters
-    lower1 = lower[letterseed1]
-    upper1 = upper[letterseed2]
-    lower2 = lower[letterseed3]
-    upper2 = upper[letterseed4]
-    num1 = numbers[numseed1]
-    num2 = numbers[numseed2]
-    spec1 = specialchar[specseed1]
+    for x in range(8):
+        if x % 2 == 0:
+            if x % 4 == 0:
+                seed = rand_seed(len(upper))
+                options += str(upper[seed])
+            else:
+                seed = rand_seed(len(lower))
+                options += str(lower[seed])
+        else:
+            if x == 3:
+                seed = rand_seed(len(specialchar))
+                options+= str(specialchar[seed])
+            else:
+                seed = rand_seed(len(numbers))
+                options += str(numbers[seed])
 
     # Create arrays of selected characters and give a shuffled index to randomly arrange characters
-    options = upper1 + upper2 + lower1 + lower2 + str(num1) + str(num2) + spec1
     index = list(range(0, 7))
     random.shuffle(index)
 
@@ -41,12 +55,6 @@ def make_password():
     for item in index:
         pword += str(options[item])
     print(pword)
-
-    # Write the password to a text file
-    path = 'C:/A/Normal/path/pword.txt'
-    file = open(path, 'w')
-    file.write(pword)
-    file.close()
 
 # Main Body
 make_password()
