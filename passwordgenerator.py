@@ -30,7 +30,7 @@ def make_password():
     specseed2 = rand_seed(len(specialchar))
 
     # Assign random characters
-    for x in range(8):
+    for x in range(9):
         if x % 2 == 0:
             if x % 4 == 0:
                 seed = rand_seed(len(upper))
@@ -54,7 +54,12 @@ def make_password():
     pword = ''
     for item in index:
         pword += str(options[item])
-    print(pword)
+    return pword
 
 # Main Body
-make_password()
+times = int(input("Please enter the number of passwords you would like to make: "))
+times
+
+for password in range(times):
+    print(make_password())
+
